@@ -35,7 +35,6 @@ gulp.task('clean', function() {
 gulp.task('bower', function() {
   var glob = mainBowerFiles();
   glob.push('!' + path.join(__dirname, 'bower_components/open-sans-fontface/**/*'));
-  util.log(glob);
   return gulp.src(glob)
     .pipe(gulp.dest('../dev/vendor/'));
 });
@@ -54,7 +53,7 @@ gulp.task('fonts', function() {
 });
 
 gulp.task('index', ['bower', 'js', 'less', 'fonts'], function() {
-  gulp.src('./index.html')
+  return gulp.src('./index.html')
     .pipe(
       inject(
         merge(
