@@ -2,7 +2,7 @@
 A client for jwt-api-server
 
 1. Clone the repo
-2. cd jwt-api-server/app
+2. cd jwt-api-client/app
 3. npm install
 4. bower install
 5. gulp index *# "one-time" setup index.html - bower files get injected*
