@@ -6,6 +6,13 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router'])
     $stateProvider
       .state('home', {
         url: '/home',
-        template: '<h1>hello world</h1>'
+        templateUrl: '../templates/home.html',
+        controllerAs: 'vm',
+        controller: function($scope, $mdSidenav) {
+          var vm = this;
+          vm.toggleSidenav = function() {
+            $mdSidenav('left').toggle();
+          };
+        }
       });
   });
