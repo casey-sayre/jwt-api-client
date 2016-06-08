@@ -33,17 +33,24 @@ gulp.task('clean', function() {
 });
 
 gulp.task('bower', function() {
-  return gulp.src(mainBowerFiles())
+  var glob = mainBowerFiles();
+  glob.push('!' + path.join(__dirname, 'bower_components/open-sans-fontface/**/*'));
+  util.log(glob);
+  return gulp.src(glob)
     .pipe(gulp.dest('../dev/vendor/'));
 });
 
 gulp.task('fonts', function() {
-  return gulp.src([
-    './bower_components/open-sans-fontface/open-sans.css',
-    './bower_components/open-sans-fontface/fonts/**/*'], {
+  return merge(
+    gulp.src('./bower_components/open-sans-fontface/fonts/**/*', {
       base: './bower_components/open-sans-fontface/'
     })
-    .pipe(gulp.dest('../dev/css/'));
+    .pipe(gulp.dest('../dev/css/')),
+    gulp.src('./bower_components/open-sans-fontface/open-sans.css', {
+      base: './bower_components/open-sans-fontface/'
+    })
+    .pipe(gulp.dest('../dev/css/'))
+  );
 });
 
 gulp.task('index', ['bower', 'js', 'less', 'fonts'], function() {
