@@ -8,7 +8,15 @@
 </head>
 <body ng-app="ClientApp">
 
-	<div ui-view></div>
+  <div flex layout="column">
+    <div ui-view="toolbar"></div>
+    <div layout="row" flex>
+      <div ui-view="sidebar"></div>
+      <div layout="column" flex>
+        <div ui-view="mainContent"></div>
+      </div>
+    </div>
+  </div>
 
   <!-- inject:js -->
   <!-- endinject -->

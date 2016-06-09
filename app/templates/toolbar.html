@@ -1,0 +1,31 @@
+<md-toolbar layout="row">
+  <md-button class="md-icon-button md-primary" aria-label="Toggle" ng-click="vm.toggleSidenav('left')" hide-gt-sm>
+    <md-tooltip md-direction="bottom">
+      Toggle left sidebar
+    </md-tooltip>
+    <md-icon style="color: white;">
+      more_horiz
+    </md-icon>
+  </md-button>
+  <h1 class="md-toolbar-tools" layout-align-gt-sm="center center">Client Application</h1>
+  <div class="md-body-1" flex="10" layout layout-align-gt-sm="center center">Public User</div>
+  <md-menu>
+    <md-button aria-label="Open users menu" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+      <md-icon style="color: white;">person</md-icon>
+    </md-button>
+    <md-menu-content width="4">
+      <md-menu-item>
+        <md-button ng-click="vm.login()">
+          <md-icon style="color: green;">check</md-icon>
+          Login
+        </md-button>
+      </md-menu-item>
+      <md-menu-item>
+        <md-button>
+          <md-icon style="color: red;">close</md-icon>
+          Logout
+        </md-button>
+      </md-menu-item>
+    </md-menu-content>
+  </md-menu>
+</md-toolbar>
