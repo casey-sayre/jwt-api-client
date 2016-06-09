@@ -8,4 +8,5 @@ angular.module('ClientApp')
     };
     vm.login = function(username) {
       $mdDialog.hide(username);
-    };  }]);
+    };
+  }]);
