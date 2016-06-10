@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <!-- inject:css -->
-    <!-- endinject -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</head>
-<body ng-app="ClientApp">
 
-  <div flex layout="column" style="height:100%;overflow-y:hidden;">
-    <div ui-view="toolbar"></div>
-    <div flex layout="row">
-      <div ui-view="sidebar"></div>
-      <div flex layout="column">
-        <div flex ui-view="mainContent"></div>
-      </div>
-    </div>
-  </div>
+<head>
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <!-- inject:css -->
+  <!-- endinject -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body ng-app="ClientApp" layout="column">
+
+  <md-toolbar ui-view="toolbar" layout="row"></md-toolbar>
+  <md-content flex layout="row">
+    <md-sidenav layout="column" class="md-sidenav-left md-padding" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')" ui-view="sidebar">
+    </md-sidenav>
+    <md-content layout="column" flex class="md-padding" ui-view="mainContent">
+    </md-content>
+  </md-content>
 
   <!-- inject:js -->
   <!-- endinject -->
 </body>
+
 </html>

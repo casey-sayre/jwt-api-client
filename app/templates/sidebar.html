@@ -1,21 +1,19 @@
-<md-sidenav layout="column" layout-margin class="md-sidenav-left md-padding"
-    md-whiteframe="3" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')"
-    style="height:100%;">
-  <div class="md-title" layout-margin>
-    API Version
-    <div flex class="md-body-1">{{vm.apiVersion}}</div>
-  </div>
-  <md-divider></md-divider>
-  <div class="md-title">API News</div>
-  <div ng-repeat="newsItem in vm.apiNews" layout="column" layout-margin >
-    <div flex="noshrink">
-      <div flex class="md-caption">{{newsItem.time}}</div>
-      <div flex class="md-subhead" layout-margin>
-        {{newsItem.headline}}
-        <p flex class="md-body-1">{{newsItem.copy}}</p>
-      </div>
+<div class="md-title">
+  API Version
+  <div flex class="md-body-1" layout-margin>{{vm.apiVersion}}</div>
+</div>
+<md-divider></md-divider>
+<div class="md-title" style="margin-top:12px;">
+  API News
+</div>
+<div ng-repeat="newsItem in vm.apiNews" layout="column" layout-margin>
+  <div flex="noshrink">
+    <div flex class="md-caption">{{newsItem.time}}</div>
+    <div flex class="md-subhead" layout-margin>
+      {{newsItem.headline}}
+      <p flex class="md-body-1">{{newsItem.copy}}</p>
     </div>
-    <md-divider ng-if="!$last"></md-divider>
   </div>
-  <div flex></div>
-</md-sidenav>
+  <md-divider ng-if="!$last"></md-divider>
+</div>
+<div flex></div>
