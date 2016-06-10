@@ -96,6 +96,7 @@ gulp.task('watch', function() {
   gulp.watch(['./js/**/*.js'], ['js']);
   gulp.watch(['./less/**/*.less'], ['less']);
   gulp.watch(['./templates/**/*.html'], ['templates']);
+  gulp.watch(['./index.html'], ['index']);
 });
 
-gulp.task('default', ['js', 'templates', 'connect', 'watch']);
+gulp.task('default', ['js', 'templates', 'index', 'connect', 'watch']);
