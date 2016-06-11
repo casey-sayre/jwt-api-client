@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource'])
+angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'])
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
     $stateProvider

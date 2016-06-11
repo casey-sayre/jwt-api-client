@@ -1,5 +1,5 @@
-<md-dialog aria-label="Login dialog" ng-cloak>
-  <form>
+<md-dialog class="tub-login" aria-label="Login dialog" ng-cloak flex="80" flex-gt-sm="40">
+  <form name="loginForm">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Login</h2>
@@ -13,11 +13,17 @@
       <div class="md-dialog-content" layout="column">
         <md-input-container>
           <label>Email</label>
-          <input ng-model="user.email">
+          <input ng-model="vm.email" type="email" name="vmEmail" required>
+          <span class="md-caption" md-style-color="{'color': 'accent.hue-5'}"
+              ng-show="loginForm.vmEmail.$error.required && (loginForm.vmEmail.$error.touched || loginForm.$submitted)">Required</span>
+          <span class="md-caption" md-style-color="{'color': 'accent.hue-5'}"
+              ng-show="loginForm.vmEmail.$error.email && (loginForm.vmEmail.$error.touched || loginForm.$submitted)">Invalid format</span>
         </md-input-container>
         <md-input-container>
           <label>Password</label>
-          <input ng-model="user.password" type="password">
+          <input ng-model="vm.password" type="password" name="vmPassword" required>
+          <span class="md-caption" md-style-color="{'color': 'accent.hue-5'}"
+              ng-show="loginForm.vmPassword.$error.required && (loginForm.vmPassword.$error.touched || loginForm.$submitted)">Required</span>
         </md-input-container>
       </div>
     </md-dialog-content>
