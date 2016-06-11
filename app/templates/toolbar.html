@@ -7,7 +7,7 @@
   </md-icon>
 </md-button>
 <h1 class="md-toolbar-tools" layout-align-gt-sm="center center">Client Application</h1>
-<div class="md-body-1" flex="10" layout layout-align-gt-sm="center center">Public User</div>
+<div class="md-body-1" flex="10" layout layout-align="center center">Public</div>
 <md-menu>
   <md-button aria-label="Open users menu" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
     <md-icon style="color: white;">person</md-icon>
@@ -15,13 +15,13 @@
   <md-menu-content width="4">
     <md-menu-item>
       <md-button ng-click="vm.login()">
-        <md-icon style="color: green;">check</md-icon>
+        <md-icon md-style-color="{'color': 'primary.'}">check</md-icon>
         Login
       </md-button>
     </md-menu-item>
     <md-menu-item>
       <md-button>
-        <md-icon style="color: red;">close</md-icon>
+        <md-icon md-style-color="{'color': 'warn.'}">close</md-icon>
         Logout
       </md-button>
     </md-menu-item>

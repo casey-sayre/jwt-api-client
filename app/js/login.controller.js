@@ -3,6 +3,9 @@
 angular.module('ClientApp')
   .controller('LoginController', ['$scope', '$mdDialog', function($scope, $mdDialog) {
     var vm = this;
+    vm.inputFocus = function() {
+      if ($scope.loginForm.$submitted) $scope.loginForm.$setPristine();
+    };
     vm.cancel = function() {
       $mdDialog.cancel();
     };
