@@ -9,12 +9,15 @@ angular.module('ClientApp')
     vm.cancel = function() {
       $mdDialog.cancel();
     };
-    vm.login = function(username) {
+    vm.login = function() {
       var form = $scope.loginForm;
       if (!form.$valid) {
         form.$setSubmitted();
         return;
       }
-      $mdDialog.hide(username);
+      $mdDialog.hide({
+        username: form.vmEmail.$modelValue,
+        password: form.vmPassword.$modelValue
+      });
     };
   }]);

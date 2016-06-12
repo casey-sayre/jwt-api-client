@@ -7,7 +7,8 @@
   </md-icon>
 </md-button>
 <h1 class="md-toolbar-tools" layout-align-gt-sm="center center">Client Application</h1>
-<div class="md-body-1" flex="10" layout layout-align="center center">Public</div>
+<div flex></div>
+<div class="md-body-1" flex="auto" layout layout-align="center center">{{vm.currentUsername}}</div>
 <md-menu>
   <md-button aria-label="Open users menu" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
     <md-icon style="color: white;">person</md-icon>

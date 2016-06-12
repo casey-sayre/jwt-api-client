@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('ClientApp')
-  .controller('ToolbarController', ['$mdSidenav', '$mdDialog', function($mdSidenav, $mdDialog) {
+  .controller('ToolbarController', [
+    '$log', '$mdSidenav', '$mdDialog', '$window', 'UserService',
+    function($log, $mdSidenav, $mdDialog, $window, UserService) {
     var vm = this;
+    vm.currentUsername = UserService.getCurrUser().username;
     vm.toggleSidenav = function() {
       $mdSidenav('left').toggle();
     };
@@ -18,8 +21,13 @@ angular.module('ClientApp')
         targetEvent: ev,
         clickOutsideToClose:true
       })
-      .then(function(username) {
-        vm.status = 'Login succeeded, user "' + username + '"';
+      .then(function(loginInfo) {
+        vm.status = 'Login dlg succeeded, user "' + loginInfo.username + '"';
+        UserService.login(loginInfo.username, loginInfo.password).then(function(userData) {
+          vm.currentUsername = userData.username;
+        }, function() {
+          $log.info('login fail');
+        });
       }, function() {
         vm.status = 'Login cancelled';
       });
