@@ -5,7 +5,8 @@ angular.module('ClientApp')
     '$log', '$mdSidenav', '$mdDialog', '$window', 'UserService',
     function($log, $mdSidenav, $mdDialog, $window, UserService) {
     var vm = this;
-    vm.currentUsername = UserService.getCurrUser().username;
+    var currentUser = UserService.getCurrentUser();
+    vm.currentUsername = currentUser ? currentUser.username : 'public';
     vm.toggleSidenav = function() {
       $mdSidenav('left').toggle();
     };
@@ -31,5 +32,8 @@ angular.module('ClientApp')
       }, function() {
         vm.status = 'Login cancelled';
       });
+    };
+    vm.logout = function(ev) {
+      UserService.logout();
     };
   }]);

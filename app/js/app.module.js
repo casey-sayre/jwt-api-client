@@ -13,6 +13,9 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'
           apiNews: function(PublicService) {
             return PublicService.getApiNews();
           },
+          currentUser: function(UserService) {
+            return UserService.getCurrentUser();
+          }
         },
         views: {
           toolbar: {
@@ -27,6 +30,8 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'
           },
           mainContent: {
             templateUrl: '../templates/main-content.html',
+            controller: 'MainContentController',
+            controllerAs: 'vm',
           }
         },
       });
