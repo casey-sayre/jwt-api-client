@@ -41,7 +41,7 @@ angular.module('ClientApp')
           // 20 is for margins and can be changed
           var height = scope.data.length * (barHeight + barMargin);
           // 35 = 30(bar height) + 5(margin between bars)
-          var maxScore = _.max(_.map(data, 'score'));
+          var maxClose = _.max(_.map(data, 'adj_close'));
 
           // set the height based on the calculations above
           svg.attr('height', height);
@@ -65,7 +65,7 @@ angular.module('ClientApp')
             .transition()
             .duration(durationMsec) // time of duration
             .attr('width', function(d) {
-              return d.score / (maxScore / width);
+              return d.adj_close / (maxClose / width); // jshint ignore:line
             }); // width based on scale
 
           svg.selectAll('text')
@@ -78,7 +78,7 @@ angular.module('ClientApp')
             })
             .attr('x', textLeftMargin)
             .text(function(d) {
-              return d.name;
+              return d.symbol;
             });
 
         };

@@ -22,7 +22,7 @@ angular.module('ClientApp')
         $window.localStorage.removeItem('username');
         $window.localStorage.removeItem('token');
         currentUser = null;
-        $state.reload('root.home');
+        $state.reload('root');
       };
 
       var login = function(username, password) {
@@ -40,7 +40,7 @@ angular.module('ClientApp')
           currentUser = {
             username: response.data.username
           };
-          $state.reload('root.home');
+          $state.reload('root');
           return currentUser;
         }, function(response) {
           $log.info('failure');

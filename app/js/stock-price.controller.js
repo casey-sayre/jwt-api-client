@@ -6,6 +6,8 @@ angular.module('ClientApp')
     vm.loggedIn = !!currentUser;
     vm.data = [];
     vm.getStockData = function() {
-      vm.data = StockService.getStockData();
+      StockService.getStockData().then(function(data) {
+        vm.data = data;
+      });
     };
   }]);

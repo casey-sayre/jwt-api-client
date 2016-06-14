@@ -2,6 +2,9 @@
 
 angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'])
   .constant('_', window._)
+  .config(function($httpProvider) {
+    $httpProvider.interceptors.push('TokenService');
+  })
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
     $stateProvider
