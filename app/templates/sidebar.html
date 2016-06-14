@@ -1,19 +1,37 @@
 <div flex="noshrink">
-  <div class="md-title">
-    API Version
-  </div>
-  <div class="md-body-1" flex-offset="10">{{vm.apiVersion}}</div>
+  <md-content style="background-color: inherit;">
+    <md-list flex>
+      <md-list-item class="md-1-line" ui-sref="root.home">
+        <div layout="row" flex>
+          <md-icon md-style-color="{'color': 'primary.'}">home</md-icon>
+          <div flex="5"></div>
+          <div class="md-list-item-text">
+            <h3>Home</h3>
+          </div>
+          <div flex></div>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-1-line" ui-sref="root.stocks">
+        <div layout="row" flex>
+          <md-icon md-style-color="{'color': 'primary.'}">timeline</md-icon>
+          <div flex="5"></div>
+          <div class="md-list-item-text">
+            <h3>View Stock Prices</h3>
+          </div>
+          <div flex></div>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-1-line" ng-click="null">
+        <div layout="row" flex>
+          <md-icon md-style-color="{'color': 'primary.'}">build</md-icon>
+          <div flex="5"></div>
+          <div class="md-list-item-text">
+            <h3>Site Administration</h3>
+          </div>
+          <div flex></div>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
 </div>
-<md-divider layout-margin></md-divider>
-<div class="md-title">
-  API News
-</div>
-<div ng-repeat="newsItem in vm.apiNews" layout="column" flex-offset="10" flex="noshrink">
-  <div class="md-caption">{{newsItem.time}}</div>
-  <div class="md-subhead">
-    {{newsItem.headline}}
-  </div>
-  <p class="md-body-1" flex-offset="10">{{newsItem.copy}}</p>
-  <md-divider ng-if="!$last" layout-margin></md-divider>
-</div>
-<div flex="100"></div>
+<div flex="100" style="background-color=green;"></div>

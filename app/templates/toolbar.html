@@ -1,6 +1,6 @@
 <md-button class="md-icon-button md-primary" aria-label="Toggle" ng-click="vm.toggleSidenav('left')" hide-gt-sm>
   <md-tooltip md-direction="bottom">
-    Toggle left sidebar
+    Toggle sidebar
   </md-tooltip>
   <md-icon style="color: white;">
     more_horiz
@@ -11,17 +11,20 @@
 <div class="md-body-1" flex="auto" layout layout-align="center center">{{vm.currentUsername}}</div>
 <md-menu>
   <md-button aria-label="Open users menu" class="md-icon-button" ng-click="vm.openMenu($mdOpenMenu, $event)">
+    <md-tooltip md-direction="bottom">
+      Login / logout
+    </md-tooltip>
     <md-icon style="color: white;">person</md-icon>
   </md-button>
   <md-menu-content width="4">
     <md-menu-item>
-      <md-button ng-click="vm.login()">
+      <md-button ng-click="vm.login()" ng-disabled="vm.loggedIn">
         <md-icon md-style-color="{'color': 'primary.'}">check</md-icon>
         Login
       </md-button>
     </md-menu-item>
     <md-menu-item>
-      <md-button ng-click="vm.logout()">
+      <md-button ng-click="vm.logout()" ng-disabled="!vm.loggedIn">
         <md-icon md-style-color="{'color': 'warn.'}">close</md-icon>
         Logout
       </md-button>

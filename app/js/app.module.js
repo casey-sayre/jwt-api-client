@@ -4,15 +4,10 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'
   .config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/home');
     $stateProvider
-      .state('home', {
-        url: '/home',
+      .state('root', {
+        abstract: true,
+        url: '',
         resolve: {
-          apiVersion: function(PublicService) {
-            return PublicService.getVersion();
-          },
-          apiNews: function(PublicService) {
-            return PublicService.getApiNews();
-          },
           currentUser: function(UserService) {
             return UserService.getCurrentUser();
           }
@@ -29,10 +24,30 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'
             controllerAs: 'vm',
           },
           mainContent: {
-            templateUrl: '../templates/main-content.html',
-            controller: 'MainContentController',
-            controllerAs: 'vm',
+            template: '<div ui-view></div>'
           }
+        }
+      })
+      .state('root.home', {
+        url: '/home',
+        resolve: {
+          apiVersion: function(PublicService) {
+            return PublicService.getVersion();
+          },
+          apiNews: function(PublicService) {
+            return PublicService.getApiNews();
+          },
         },
+        templateUrl: '../templates/home.html',
+        controller: 'HomeController',
+        controllerAs: 'vm',
+      })
+      .state('root.stocks', {
+        url: '/stocks',
+        resolve: {
+        },
+        templateUrl: '../templates/stock-price.html',
+        controller: 'StockPriceController',
+        controllerAs: 'vm',
       });
   });

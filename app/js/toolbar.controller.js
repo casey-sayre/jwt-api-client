@@ -6,6 +6,7 @@ angular.module('ClientApp')
     function($log, $mdSidenav, $mdDialog, $window, UserService) {
     var vm = this;
     var currentUser = UserService.getCurrentUser();
+    vm.loggedIn = !!currentUser;
     vm.currentUsername = currentUser ? currentUser.username : 'public';
     vm.toggleSidenav = function() {
       $mdSidenav('left').toggle();

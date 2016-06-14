@@ -17,7 +17,7 @@
     "require": false,
     "__dirname": false,
     "__DEV__": false,
-    
+
     // Angular
     "angular": false,
 
@@ -36,6 +36,8 @@
     // Protractor
     "browser": false,
     "element": false,
-    "by": false
+    "by": false,
+
+    "d3": false
   }
 }

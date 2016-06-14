@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('ClientApp')
-  .controller('SidebarController', ['$q', 'apiVersion', 'apiNews', function($q, apiVersion, apiNews) {
+  .controller('SidebarController', ['$q', function($q) {
     var vm = this;
-    vm.apiVersion = apiVersion;
-    vm.apiNews = apiNews;
+    vm.showNav = true;
   }]);
