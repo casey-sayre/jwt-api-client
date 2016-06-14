@@ -1,4 +1,14 @@
-<div class="md-title">
-Stock Price
-</div>
-<div flex="100" d3-bars style="background-color: red;"></div>
+<md-content>
+  <div layout="column" layout-fill flex>
+    <div layout="row">
+      <div class="md-title">
+        Stock Prices
+      </div>
+      <md-button ng-click="vm.getStockData()" ng-disabled="!vm.loggedIn">
+        <md-icon md-style-color="{'color': 'primary.'}">refresh</md-icon>
+        Refresh Data
+      </md-button>
+    </div>
+    <div flex="100" d3-bars data="vm.data" style="background-color: red;"></div>
+  </div>
+</md-content>

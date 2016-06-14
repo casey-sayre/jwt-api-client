@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('ClientApp')
-  .controller('StockPriceController', ['currentUser', function(currentUser) {
+  .controller('StockPriceController', ['currentUser', 'StockService', function(currentUser, StockService) {
     var vm = this;
-    vm.isLoggedIn = !!currentUser;
-    vm.analytics = null;
+    vm.loggedIn = !!currentUser;
+    vm.data = [];
+    vm.getStockData = function() {
+      vm.data = StockService.getStockData();
+    };
   }]);

@@ -1,10 +1,12 @@
 'use strict';
 
 angular.module('ClientApp')
-  .directive('d3Bars', ['$log', '$window', '$timeout', function($log, $window, $timeout) {
+  .directive('d3Bars', ['$log', '$window', '$timeout', '_', function($log, $window, $timeout, _) {
     return {
       restrict: 'EA',
-      scope: {},
+      scope: {
+        data: '='
+      },
       link: function(scope, element, attrs) {
         var svg = d3.select(element[0])
           .append('svg')
@@ -15,29 +17,11 @@ angular.module('ClientApp')
           scope.$apply();
         };
 
-        // hard-code data
-        scope.data = [{
-          name: 'Greg',
-          score: 98
-        }, {
-          name: 'Ari',
-          score: 96
-        }, {
-          name: 'Q',
-          score: 75
-        }, {
-          name: 'Loser',
-          score: 48
-        }];
-
         // Watch for resize event
         scope.$watch(function() {
-          $log.info('width ret', angular.element($window)[0].innerWidth);
           return angular.element($window)[0].innerWidth;
         }, function() {
-          $log.info('width call', angular.element($window)[0].innerWidth);
           $timeout(function() {
-            $log.info('width aft delay', angular.element($window)[0].innerWidth);
             scope.render(scope.data);
           }, 500);
         });
@@ -47,14 +31,17 @@ angular.module('ClientApp')
           svg.selectAll('*').remove();
 
           // setup variables
-          var width, height, max;
-          width = d3.select(element[0])[0][0].offsetWidth - 20;
+          var horzMargin = 20;
+          var barHeight = 30;
+          var barMargin = 4;
+          var textLeftMargin = 15;
+          var durationMsec = 1000;
+
+          var width = d3.select(element[0])[0][0].offsetWidth - horzMargin;
           // 20 is for margins and can be changed
-          height = scope.data.length * 35;
+          var height = scope.data.length * (barHeight + barMargin);
           // 35 = 30(bar height) + 5(margin between bars)
-          max = 98;
-          // this can also be found dynamically when the data is not static
-          // max = Math.max.apply(Math, _.map(data, ((val)-> val.count)))
+          var maxScore = _.max(_.map(data, 'score'));
 
           // set the height based on the calculations above
           svg.attr('height', height);
@@ -69,16 +56,16 @@ angular.module('ClientApp')
                 item: d
               });
             })
-            .attr('height', 30) // height of each bar
+            .attr('height', barHeight)
             .attr('width', 0) // initial width of 0 for transition
-            .attr('x', 10) // half of the 20 side margin specified above
+            .attr('x', horzMargin / 2)
             .attr('y', function(d, i) {
-              return i * 35;
+              return i * (barHeight + barMargin) + barMargin / 2;
             }) // height + margin between bars
             .transition()
-            .duration(1000) // time of duration
+            .duration(durationMsec) // time of duration
             .attr('width', function(d) {
-              return d.score / (max / width);
+              return d.score / (maxScore / width);
             }); // width based on scale
 
           svg.selectAll('text')
@@ -87,11 +74,11 @@ angular.module('ClientApp')
             .append('text')
             .attr('fill', '#fff')
             .attr('y', function(d, i) {
-              return i * 35 + 22;
+              return i * (barHeight + barMargin) + 22;
             })
-            .attr('x', 15)
+            .attr('x', textLeftMargin)
             .text(function(d) {
-              return d[scope.label];
+              return d.name;
             });
 
         };
