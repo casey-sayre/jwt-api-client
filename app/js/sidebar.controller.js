@@ -1,7 +1,23 @@
 'use strict';
 
 angular.module('ClientApp')
-  .controller('SidebarController', ['$q', function($q) {
+  .controller('SidebarController', ['currentUser', function(currentUser) {
     var vm = this;
-    vm.showNav = true;
+    var loggedIn = !!currentUser;
+    vm.sidebarOptions = [{
+      title: 'Home',
+      iconName: 'home',
+      authorized: true,
+      stateName: 'root.home'
+    }, {
+      title: 'View Stock Prices',
+      iconName: 'timeline',
+      authorized: loggedIn, // TODO
+      stateName: 'root.stocks'
+    }, {
+      title: 'Site Administration',
+      iconName: 'build',
+      authorized: loggedIn, // TODO
+      stateName: 'root.home'
+    }];
   }]);

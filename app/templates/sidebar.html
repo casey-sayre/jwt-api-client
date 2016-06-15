@@ -1,32 +1,15 @@
 <div flex="noshrink">
   <md-content style="background-color: inherit;">
     <md-list flex>
-      <md-list-item class="md-1-line" ui-sref="root.home">
+      <md-list-item ng-repeat="option in vm.sidebarOptions"
+          class="md-1-line" ui-sref="{{option.stateName}}" ng-disabled="!option.authorized">
         <div layout="row" flex>
-          <md-icon md-style-color="{'color': 'primary.'}">home</md-icon>
+          <md-tooltip ng-if="!option.authorized" md-direction="right">Authorization Required</md-tooltip>
+          <md-icon ng-if="option.authorized" md-style-color="{'color': 'primary.'}">{{option.iconName}}</md-icon>
+          <md-icon ng-if="!option.authorized" md-style-color="{'color': 'warn.'}">{{option.iconName}}</md-icon>
           <div flex="5"></div>
           <div class="md-list-item-text">
-            <h3>Home</h3>
-          </div>
-          <div flex></div>
-        </div>
-      </md-list-item>
-      <md-list-item class="md-1-line" ui-sref="root.stocks">
-        <div layout="row" flex>
-          <md-icon md-style-color="{'color': 'primary.'}">timeline</md-icon>
-          <div flex="5"></div>
-          <div class="md-list-item-text">
-            <h3>View Stock Prices</h3>
-          </div>
-          <div flex></div>
-        </div>
-      </md-list-item>
-      <md-list-item class="md-1-line" ng-click="null">
-        <div layout="row" flex>
-          <md-icon md-style-color="{'color': 'primary.'}">build</md-icon>
-          <div flex="5"></div>
-          <div class="md-list-item-text">
-            <h3>Site Administration</h3>
+            <h3>{{option.title}}</h3>
           </div>
           <div flex></div>
         </div>
