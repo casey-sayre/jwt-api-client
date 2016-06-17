@@ -10,7 +10,17 @@
   </md-toolbar>
   <md-dialog-content>
     <div class="md-dialog-content" layout="column">
-      <h1>List Goes Here</h1>
+      <md-list>
+        <md-list-item ng-repeat="perm in vm.permissions" layout="row">
+          <md-tooltip md-direction="left">
+            <span ng-if="!perm.granted">Not Granted</span>
+            <span ng-if="perm.granted">Granted</span>
+          </md-tooltip>
+          <md-icon ng-if="perm.granted" md-style-color="{'color': 'primary.'}" flex="10">check</md-icon>
+          <md-icon ng-if="!perm.granted" md-style-color="{'color': 'warn.'}" flex="10">close</md-icon>
+          <div class="md-body-1" flex>{{perm.description}}</div>
+        </md-list-item>
+      </md-list>
     </div>
   </md-dialog-content>
   <md-dialog-actions layout="row">

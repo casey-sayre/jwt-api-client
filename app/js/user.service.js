@@ -31,7 +31,6 @@ angular.module('ClientApp')
         $window.localStorage.removeItem('username');
         $window.localStorage.removeItem('token');
         currentUser = null;
-        $state.reload('root');
       };
 
       var login = function(username, password) {
@@ -48,11 +47,9 @@ angular.module('ClientApp')
           currentUser = {
             username: response.data.username
           };
-          $state.reload('root');
           return currentUser;
         }, function(response) {
           $log.info('failure');
-          logout();
           return $q.reject(angular.extend(response.data, {status: response.status}));
         });
       };

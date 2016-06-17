@@ -2,8 +2,8 @@
 
 angular.module('ClientApp')
   .controller('ToolbarController', [
-    '$log', '$mdSidenav', '$mdDialog', '$window', 'UserService',
-    function($log, $mdSidenav, $mdDialog, $window, UserService) {
+    '$log', '$mdSidenav', '$state', '$mdDialog', '$window', 'UserService', 'currentUserPermissions',
+    function($log, $mdSidenav, $state, $mdDialog, $window, UserService, currentUserPermissions) {
     var vm = this;
     var currentUser = UserService.getCurrentUser();
     vm.loggedIn = !!currentUser;
@@ -24,18 +24,23 @@ angular.module('ClientApp')
         clickOutsideToClose:true
       })
       .then(function(loginInfo) {
-        vm.status = 'Login dlg succeeded, user "' + loginInfo.username + '"';
         UserService.login(loginInfo.username, loginInfo.password).then(function(userData) {
           vm.currentUsername = userData.username;
+          $state.go('root.home', null, {
+            reload: true
+          });
         }, function() {
           $log.info('login fail');
         });
       }, function() {
-        vm.status = 'Login cancelled';
+        // login cancelled
       });
     };
     vm.logout = function(ev) {
       UserService.logout();
+      $state.go('root.home', null, {
+        reload: true
+      });
     };
     vm.showPerms = function(ev) {
       $mdDialog.show({
@@ -44,7 +49,10 @@ angular.module('ClientApp')
         templateUrl: '../templates/permissions.html',
         parent: angular.element(document.body),
         targetEvent: ev,
-        clickOutsideToClose:true
+        clickOutsideToClose:true,
+        locals: {
+          permissions: currentUserPermissions
+        }
       });
     };
   }]);
