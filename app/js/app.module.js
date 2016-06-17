@@ -14,6 +14,17 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'
         resolve: {
           currentUser: function(UserService) {
             return UserService.getCurrentUser();
+          },
+          currentUserPermissions: function(UserService) {
+            return UserService.getCurrentPermissions();
+          },
+          checkPermission: function(_, currentUserPermissions) {
+            return function(permission) {
+              var requiredPermEntry = _.find(currentUserPermissions, function(permEntry) {
+                return permEntry.permission === permission;
+              });
+              return requiredPermEntry && requiredPermEntry.granted;
+            };
           }
         },
         views: {

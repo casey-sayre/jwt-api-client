@@ -5,7 +5,7 @@ angular.module('ClientApp')
       return {
         request: function(config) {
           var token = window.localStorage.getItem('token');
-          config.headers.Authorization = 'Bearer ' + token;
+          if (token) config.headers.Authorization = 'Bearer ' + token;
           return config;
         },
       };

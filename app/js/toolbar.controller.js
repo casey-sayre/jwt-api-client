@@ -37,4 +37,14 @@ angular.module('ClientApp')
     vm.logout = function(ev) {
       UserService.logout();
     };
+    vm.showPerms = function(ev) {
+      $mdDialog.show({
+        controller: 'PermissionsController',
+        controllerAs: 'vm',
+        templateUrl: '../templates/permissions.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true
+      });
+    };
   }]);

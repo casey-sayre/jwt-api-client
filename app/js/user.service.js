@@ -18,6 +18,15 @@ angular.module('ClientApp')
         return currentUser;
       };
 
+      var getCurrentPermissions = function() {
+        return $http({
+          method: 'GET',
+          url: API_CONFIG.url + '/api/public/permissions',
+        }).then(function(response) {
+          return response.data.permissions;
+        });
+      };
+
       var logout = function() {
         $window.localStorage.removeItem('username');
         $window.localStorage.removeItem('token');
@@ -34,7 +43,6 @@ angular.module('ClientApp')
             password: password
           }
         }).then(function(response) {
-          $log.info('success');
           $window.localStorage.setItem('username', response.data.username);
           $window.localStorage.setItem('token', response.data.token);
           currentUser = {
@@ -52,7 +60,8 @@ angular.module('ClientApp')
       return {
         login: login,
         logout: logout,
-        getCurrentUser: getCurrentUser
+        getCurrentUser: getCurrentUser,
+        getCurrentPermissions: getCurrentPermissions
       };
     }
   ]);
