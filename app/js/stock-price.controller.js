@@ -10,4 +10,5 @@ angular.module('ClientApp')
         vm.data = data;
       });
     };
+    vm.getStockData();
   }]);

@@ -2,6 +2,7 @@
 
 angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'])
   .constant('_', window._)
+  .constant('moment', window.moment)
   .config(function($httpProvider) {
     $httpProvider.interceptors.push('TokenService');
   })
@@ -39,7 +40,7 @@ angular.module('ClientApp', ['ngMaterial', 'ui.router', 'ngResource', 'mdColors'
             controllerAs: 'vm',
           },
           mainContent: {
-            template: '<div ui-view></div>'
+            template: '<div ui-view layout="column" layout-fill></div>'
           }
         }
       })
