@@ -23,11 +23,11 @@ angular.module('ClientApp')
 
         // Watch for resize event
         var timeoutPromise = null;
+        var w,h;
         scope.$watch(function() {
-          var w = directiveElement.clientWidth;
-          var h = directiveElement.clientHeight;
+          w = directiveElement.clientWidth;
+          h = directiveElement.clientHeight;
           var watchVal = w << 16 | h;
-          $log.info('watchVal', watchVal.toString(16));
           return watchVal;
         }, function() {
           if (timeoutPromise) {
@@ -37,16 +37,12 @@ angular.module('ClientApp')
             svg.selectAll('*').remove();
           }
           timeoutPromise = $timeout(function() {
-            scope.render(scope.data);
+            scope.render(scope.data, w, h);
             timeoutPromise = null;
           }, 100);
         });
 
-        scope.render = function(data) {
-
-          // remove all previous items before render
-          var svgw = directiveElement.clientWidth;
-          var svgh = directiveElement.clientHeight;
+        scope.render = function(data, svgw, svgh) {
 
           svg.selectAll('*').remove();
           svg
@@ -60,10 +56,16 @@ angular.module('ClientApp')
           var graphHeight = svgh - graphVertMargin;
 
           var x = d3.time.scale()
-            .range([0, graphWidth]);
+            .range([0, graphWidth])
+            .domain(d3.extent(data, function(d) {
+              return moment(d.tradeDate, 'YYYY-MM-DD');
+            }));
 
           var y = d3.scale.linear()
-            .range([graphHeight, 0]);
+            .range([graphHeight, 0])
+            .domain(d3.extent(data, function(d) {
+              return d.adjClose;
+            }));
 
           var xAxis = d3.svg.axis()
             .scale(x)
@@ -74,9 +76,7 @@ angular.module('ClientApp')
           var yAxis = d3.svg.axis()
             .scale(y)
             .orient('left')
-            .ticks(4)
-            .tickSize(-graphWidth)
-            ;
+            .innerTickSize(-graphWidth);
 
           var line = d3.svg.line()
             .x(function(d) {
@@ -86,16 +86,8 @@ angular.module('ClientApp')
               return y(d.adjClose);
             });
 
-          x.domain(d3.extent(data, function(d) {
-            return moment(d.tradeDate, 'YYYY-MM-DD');
-          }));
-          y.domain(d3.extent(data, function(d) {
-            return d.adjClose;
-          }));
-
           var chartg = svg.append('g')
-          .attr('transform', 'translate(' + graphHorzMargin / 2 + ',' + graphVertMargin / 2 + ')')
-          ;
+            .attr('transform', 'translate(' + graphHorzMargin / 2 + ',' + graphVertMargin / 2 + ')');
 
           chartg.append('g')
             .attr('class', 'x axis')
@@ -106,17 +98,33 @@ angular.module('ClientApp')
             .attr('class', 'y axis')
             .call(yAxis)
             .append('text')
-            .attr('transform', d3.transform('rotate(-90)'))
+            .attr('class', 'label')
+            .attr('transform', d3.transform('rotate(-90) translate(0,-50)'))
             .attr('y', 6)
             .attr('dy', '.71em')
             .style('text-anchor', 'end')
             .text('Price ($)');
 
-          chartg.append('path')
+          var path = chartg.append('path')
             .datum(data)
             .attr('class', 'line')
-            .attr('d', line)
-            ;
+            .attr('d', line);
+
+          var totalLength = path.node().getTotalLength();
+
+          path
+            .attr('stroke-dasharray', totalLength + ' ' + totalLength)
+            .attr('stroke-dashoffset', -totalLength)
+            .transition()
+              .duration(500)
+              .ease('linear')
+              .attr('stroke-dashoffset', 0);
+
+          chartg.selectAll('.axis')
+            .style('opacity', 0.2)
+            .transition()
+            .duration(500)
+            .style('opacity', 1);
         };
       }
     };
