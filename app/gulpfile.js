@@ -1,7 +1,11 @@
 'use strict';
 
 var gulp = require('gulp');
+var concat = require('gulp-concat');
+var sourcemaps = require('gulp-sourcemaps');
 var util = require('gulp-util');
+var ifElse = require('gulp-if-else');
+var autoprefixer = require('gulp-autoprefixer');
 var connect = require('gulp-connect');
 
 var inject = require('gulp-inject');
@@ -9,6 +13,7 @@ var angularFilesort = require('gulp-angular-filesort');
 
 var less = require('gulp-less');
 var uglify = require('gulp-uglify');
+var ngAnnotate = require('gulp-ng-annotate');
 var minifycss = require('gulp-minify-css');
 var mainBowerFiles = require('main-bower-files');
 var merge = require('merge-stream');
@@ -72,14 +77,28 @@ gulp.task('index', ['bower', 'js', 'less', 'fonts'], function() {
 });
 
 gulp.task('js', function() {
-  return gulp.src(['./js/**/*.js'])
+  var isProd = process.env.NODE_ENV === 'production';
+  return gulp.src(['./js/app.module.js', './js/**/*.js'])
+    .pipe(ifElse(!isProd,sourcemaps.init))
+    .pipe(concat('app.js'))
+    .pipe(ngAnnotate())
+    .pipe(uglify())
+    .pipe(ifElse(!isProd,sourcemaps.write))
     .pipe(gulp.dest('../dev/js/'))
     .pipe(connect.reload());
 });
 
 gulp.task('less', function() {
+  var isProd = process.env.NODE_ENV === 'production';
   return gulp.src('./less/**/*.less')
     .pipe(less())
+    //.pipe(ifElse(isProd,minifycss))
+    .pipe(ifElse(!isProd,sourcemaps.init))
+    .pipe(autoprefixer({
+      browsers: ['last 2 versions']
+    }))
+    .pipe(concat('app.css'))
+    .pipe(ifElse(!isProd,sourcemaps.write))
     .pipe(gulp.dest('../dev/css/'))
     .pipe(connect.reload());
 });
@@ -99,4 +118,6 @@ gulp.task('watch', function() {
   gulp.watch(['./index.html'], ['index']);
 });
 
-gulp.task('default', ['js', 'templates', 'index', 'connect', 'watch']);
+gulp.task('build', ['js', 'templates', 'index']);
+
+gulp.task('default', ['build', 'connect', 'watch']);
